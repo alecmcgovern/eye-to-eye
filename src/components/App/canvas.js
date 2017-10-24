@@ -52,12 +52,16 @@ class Canvas extends React.Component {
 		this.findxy("",{});
 
 		this.canvas.addEventListener("mousedown", (event) => this.findxy("down", event));
+		this.canvas.addEventListener("touchstart", (event) => this.findxy("down", event));
 
 		this.canvas.addEventListener("mouseup", (event) => this.findxy("up", event));
+		this.canvas.addEventListener("touchend", (event) => this.findxy("up", event));
 
 		this.canvas.addEventListener("mousemove", (event) => this.findxy("move", event));
+		this.canvas.addEventListener("touchmove", (event) => this.findxy("move", event));
 
 		this.canvas.addEventListener("mouseout", (event) => this.findxy("out", event));
+		this.canvas.addEventListener("touchleave", (event) => this.findxy("out", event));
 	}
 
 	draw() {
