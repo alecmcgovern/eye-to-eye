@@ -1,6 +1,6 @@
 import React from 'react';
 import { subscribeToTimer, sendMessage, subscribeToMessages } from './api';
-
+import Canvas from './canvas.js';
 import './index.css';
 
 
@@ -64,9 +64,10 @@ class App extends React.Component {
 					<input type="text" placeholder="placeholder" value={this.state.messageValue} onChange={this.handleChange}/>
 					<button onClick={this.handleSubmit}>Submit</button>
 				</header>
-				<div className="App-intro">
+				<div className="string-container">
 					{this.renderStrings()}
 				</div>
+				<Canvas />
 			</div>
 		);
 	}
