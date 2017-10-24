@@ -58,7 +58,7 @@ class Canvas extends React.Component {
 		this.canvas.addEventListener("touchend", (e) => this.findxy(e, "up"));
 
 		this.canvas.addEventListener("mousemove", (e) => this.findxy(e, "move"));
-		this.canvas.addEventListener("touchmove", (e) => this.findxy(e, "move"));
+		this.canvas.addEventListener("touchmove", (e) => this.findxy(e, "touchmove"));
 
 		this.canvas.addEventListener("mouseout", (e) => this.findxy(e, "out"));
 		this.canvas.addEventListener("touchleave", (e) => this.findxy(e, "out"));
@@ -75,7 +75,7 @@ class Canvas extends React.Component {
 	}
 	
 	findxy(e, type) {
-		if (e.preventDefault) {
+		if (e.preventDefault && type === 'touchmove') {
 			e.preventDefault();
 		}
 
@@ -108,7 +108,7 @@ class Canvas extends React.Component {
 			this.sketch = [];
 		}
 
-		if (type === 'move') {
+		if (type === 'move' || type === 'touchmove') {
 			if (this.flag) {
 				this.prevX = this.currX;
 				this.currX = e.clientX - this.canvas.offsetLeft;
