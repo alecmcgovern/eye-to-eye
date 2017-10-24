@@ -52,7 +52,7 @@ class Canvas extends React.Component {
 		this.findxy("",{});
 
 		this.canvas.addEventListener("mousedown", (e) => this.findxy(e, "down"));
-		this.canvas.addEventListener("touchstart", (e) => this.findxy(e, "down"));
+		this.canvas.addEventListener("touchstart", (e) => this.findxy(e, "touchstart"));
 
 		this.canvas.addEventListener("mouseup", (e) => this.findxy(e, "up"));
 		this.canvas.addEventListener("touchend", (e) => this.findxy(e, "up"));
@@ -101,6 +101,28 @@ class Canvas extends React.Component {
 			}
 		}
 
+		if (type === 'touchstart') {
+			console.log('down');
+			this.prevX = this.currX;
+			this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
+
+			this.prevY = this.currY;
+			this.currY = e.touches[0].clientY - this.canvas.offsetTop;
+
+			this.flag = true;
+			this.dotFlag = true;
+
+			this.sketch.push({ x: this.currX, y: this.currY });
+
+			if (this.dotFlag) {
+				this.ctx.beginPath();
+				this.ctx.fillStyle = this.style;
+				this.ctx.fillRect(this.currX, this.currY, this.lineWidth, this.lineWidth);
+				this.ctx.closePath();
+				this.dotFlag = false;
+			}
+		}
+
 		if (type === 'up' || type === 'out') {
 			this.flag = false;
 
@@ -124,10 +146,10 @@ class Canvas extends React.Component {
 		if (type === 'touchmove') {
 			if (this.flag) {
 				this.prevX = this.currX;
-				this.currX = e.touches[1].clientX - this.canvas.offsetLeft;
+				this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
 
 				this.prevY = this.currY;
-				this.currY = e.touches[1].clientY - this.canvas.offsetTop;
+				this.currY = e.touches[0].clientY - this.canvas.offsetTop;
 
 				this.sketch.push({ x: this.currX, y: this.currY });
 				this.draw();
