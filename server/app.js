@@ -24,6 +24,11 @@ io.on('connection', function(client) {
 			client.emit('timer', new Date());
 		}, interval);
 	});
+
+	client.on('sendMessage', (message) => {
+		console.log("client sent this message: " + message);
+		io.emit('messageReceived', message);
+	});
 });
 
 module.exports = server;
