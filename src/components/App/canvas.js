@@ -75,7 +75,7 @@ class Canvas extends React.Component {
 	}
 	
 	findxy(e, type) {
-		if (e.preventDefault && type === 'touchmove') {
+		if (e.pointers.length < 2 && e.preventDefault && type === 'touchmove') {
 			e.preventDefault();
 		}
 
@@ -143,7 +143,7 @@ class Canvas extends React.Component {
 			}
 		}
 
-		if (type === 'touchmove') {
+		if (type === 'touchmove' && e.pointers.length < 2) {
 			if (this.flag) {
 				this.prevX = this.currX;
 				this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
