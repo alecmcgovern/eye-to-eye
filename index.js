@@ -1,5 +1,5 @@
 
-const server = require('./app');
+const server = require('./server/app');
 
 const PORT = process.env.PORT || 8000;
 
