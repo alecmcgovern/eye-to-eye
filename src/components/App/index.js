@@ -60,7 +60,6 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				<header className="App-header">
-					<h1 className="App-title">{this.state.timestamp}</h1>
 					<input type="text" placeholder="placeholder" value={this.state.messageValue} onChange={this.handleChange}/>
 					<button onClick={this.handleSubmit}>Submit</button>
 				</header>
