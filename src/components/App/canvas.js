@@ -75,6 +75,8 @@ class Canvas extends React.Component {
 	}
 	
 	findxy(type, event) {
+		event.preventDefault();
+		
 		if (type === 'down') {
 			console.log('down');
 			this.prevX = this.currX;
