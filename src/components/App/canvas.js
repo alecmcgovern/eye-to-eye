@@ -124,10 +124,10 @@ class Canvas extends React.Component {
 		if (type === 'touchmove') {
 			if (this.flag) {
 				this.prevX = this.currX;
-				this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
+				this.currX = e.touches[1].clientX - this.canvas.offsetLeft;
 
 				this.prevY = this.currY;
-				this.currY = e.touches[0].clientY - this.canvas.offsetTop;
+				this.currY = e.touches[1].clientY - this.canvas.offsetTop;
 
 				this.sketch.push({ x: this.currX, y: this.currY });
 				this.draw();
