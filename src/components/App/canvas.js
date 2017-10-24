@@ -79,13 +79,16 @@ class Canvas extends React.Component {
 			e.preventDefault();
 		}
 
+		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		let scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+
 		if (type === 'down') {
 			console.log('down');
 			this.prevX = this.currX;
-			this.currX = e.clientX - this.canvas.offsetLeft;
+			this.currX = e.clientX - this.canvas.offsetLeft + scrollLeft;
 
 			this.prevY = this.currY;
-			this.currY = e.clientY - this.canvas.offsetTop;
+			this.currY = e.clientY - this.canvas.offsetTop + scrollTop;
 
 			this.flag = true;
 			this.dotFlag = true;
@@ -104,10 +107,10 @@ class Canvas extends React.Component {
 		if (type === 'touchstart' && e.touches.length < 2) {
 			console.log('down');
 			this.prevX = this.currX;
-			this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
+			this.currX = e.touches[0].clientX - this.canvas.offsetLeft + scrollLeft;
 
 			this.prevY = this.currY;
-			this.currY = e.touches[0].clientY - this.canvas.offsetTop;
+			this.currY = e.touches[0].clientY - this.canvas.offsetTop + scrollTop;
 
 			this.flag = true;
 			this.dotFlag = true;
@@ -133,10 +136,10 @@ class Canvas extends React.Component {
 		if (type === 'move') {
 			if (this.flag) {
 				this.prevX = this.currX;
-				this.currX = e.clientX - this.canvas.offsetLeft;
+				this.currX = e.clientX - this.canvas.offsetLeft + scrollLeft;
 
 				this.prevY = this.currY;
-				this.currY = e.clientY - this.canvas.offsetTop;
+				this.currY = e.clientY - this.canvas.offsetTop + scrollTop;
 
 				this.sketch.push({ x: this.currX, y: this.currY });
 				this.draw();
@@ -146,10 +149,10 @@ class Canvas extends React.Component {
 		if (type === 'touchmove' && e.touches.length < 2) {
 			if (this.flag) {
 				this.prevX = this.currX;
-				this.currX = e.touches[0].clientX - this.canvas.offsetLeft;
+				this.currX = e.touches[0].clientX - this.canvas.offsetLeft + scrollLeft;
 
 				this.prevY = this.currY;
-				this.currY = e.touches[0].clientY - this.canvas.offsetTop;
+				this.currY = e.touches[0].clientY - this.canvas.offsetTop + scrollTop;
 
 				this.sketch.push({ x: this.currX, y: this.currY });
 				this.draw();
