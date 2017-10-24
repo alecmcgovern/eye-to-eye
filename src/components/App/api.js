@@ -1,6 +1,7 @@
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:8000');
+// const socket = openSocket('http://localhost:8000');
+const socket = openSocket(window.location.hostname);
 
 function subscribeToTimer(callback) {
 	socket.on('timer', timestamp => callback(null, timestamp));
