@@ -1,0 +1,44 @@
+.color-controls-container {
+	position: absolute;
+	pointer-events: none;
+	display: flex;
+	justify-content: space-between;
+	width: 340px;
+	left: 20px;
+	top: 20px;
+	z-index: 1;
+}
+
+.color-control {
+	width: 40px;
+	height: 40px;
+	border: 1px solid grey;
+}
+
+.color-1 {
+	background-color: black;
+}
+
+.color-2 {
+	background-color: white;
+}
+
+.color-3 {
+	background-color: blue;
+}
+
+.color-4 {
+	background-color: red;
+}
+
+.color-5 {
+	background-color: green;
+}
+
+.color-6 {
+	background-color: yellow;
+}
+
+.color-7 {
+	background-color: pink;
+}

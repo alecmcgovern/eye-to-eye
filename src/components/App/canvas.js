@@ -1,6 +1,6 @@
 import React from 'react';
 import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas } from './api';
-
+import ColorControls from './colorControls.js';
 
 import './canvas.css';
 import datapoints from '../../images/datapoints.jpg';
@@ -193,6 +193,7 @@ class Canvas extends React.Component {
 					{this.state.string}
 				</div>
 				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
+				<ColorControls />
 			</div>
 		);
 	}
