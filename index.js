@@ -37,6 +37,14 @@ io.on('connection', function(client) {
 		io.emit('sketchReceived', sketch);
 	});
 
+	client.on('toggleShowImage', (showImage) => {
+		io.emit('toggleShowImageReceived', showImage);
+	});
+
+	client.on('clearCanvas', () => {
+		io.emit('clearCanvasReceived');
+	});
+
 	client.on('disconnection', function() {
 		// -1 from totalClientNumber
 	});

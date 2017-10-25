@@ -1,5 +1,5 @@
 import React from 'react';
-import { subscribeToTimer, sendMessage, subscribeToMessages } from './api';
+import { sendMessage, subscribeToShowImage, toggleShowImage, clearCanvas } from './api';
 import Canvas from './canvas.js';
 import './index.css';
 
@@ -9,39 +9,19 @@ class App extends React.Component {
 		super(props);
 
 		this.state = { 
-			timestamp: 'no timestamp yet',
 			messageValue: '',
-			strings: ["test string"]
+			string: "",
+			showImage: false
 		};
-
-		subscribeToTimer((err, timestamp) => this.setState({ 
-			timestamp 
-		}));
-
-		subscribeToMessages((err, message) => {
-			console.log("message callback");
-			let newStrings = this.state.strings;
-			newStrings.push(message);
-			this.setState({
-				messageValue: '',
-				strings: newStrings
-			});
-		});
 
 		this.handleChange = this.handleChange.bind(this);
     	this.handleSubmit = this.handleSubmit.bind(this);
-	}
 
-	renderStrings() {
-		let strings = [];
-
-		this.state.strings.forEach((string, index) => {
-			strings.push(
-				<div key={index}>{string}</div>
-			)
+    	subscribeToShowImage((err, showImage) => {
+			this.setState({
+				showImage: showImage
+			});
 		});
-
-		return strings;
 	}
 
 	handleChange(event) {
@@ -49,23 +29,36 @@ class App extends React.Component {
   	}
 
   	handleSubmit(event) {
-		console.log('Submitted: ' + this.state.messageValue);
 		event.preventDefault();
 
 		sendMessage(this.state.messageValue);
+		this.setState({messageValue: ""});
+	}
 
+	toggleShowImage() {
+		toggleShowImage(!this.state.showImage);
+	}
+
+	clearCanvas() {
+		clearCanvas();
 	}
 
 	render() {
 		return (
 			<div className="App">
 				<header className="App-header">
-					<input type="text" placeholder="placeholder" value={this.state.messageValue} onChange={this.handleChange}/>
-					<button onClick={this.handleSubmit}>Submit</button>
+					<div className="text-controls-container">
+						<input type="text" placeholder="placeholder" value={this.state.messageValue} onChange={this.handleChange}/>
+						<button onClick={this.handleSubmit}>Submit</button>
+					</div>
+					<div className="image-controls-container">
+						<button onClick={() => this.toggleShowImage()}>toggle image</button>
+					</div>
+					<div className="canvas-controls-container">
+						<button onClick={() => this.clearCanvas()}>Clear</button>
+					</div>
+
 				</header>
-				<div className="string-container">
-					{this.renderStrings()}
-				</div>
 				<Canvas />
 			</div>
 		);

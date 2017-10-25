@@ -1,12 +1,7 @@
 import openSocket from 'socket.io-client';
 
-// const socket = openSocket('http://localhost:8000');
-const socket = openSocket(window.location.hostname);
-
-function subscribeToTimer(callback) {
-	socket.on('timer', timestamp => callback(null, timestamp));
-	socket.emit('subscribeToTimer', 1000);
-} 
+const socket = openSocket('http://localhost:8000');
+// const socket = openSocket(window.location.hostname);
 
 function subscribeToMessages(callback) {
 	socket.on('messageReceived', messageReceived => callback(null, messageReceived));
@@ -24,4 +19,20 @@ function sendSketch(sketch) {
 	socket.emit('sendSketch', sketch);
 }
 
-export { subscribeToTimer, sendMessage, subscribeToMessages, sendSketch, subscribeToSketches }
+function subscribeToShowImage(callback) {
+	socket.on('toggleShowImageReceived', showImage => callback(null, showImage));
+}
+
+function toggleShowImage(showImage) {;
+	socket.emit('toggleShowImage', showImage);
+}
+
+function subscribeToClearCanvas(callback) {
+	socket.on('clearCanvasReceived', () => callback(null));
+}
+
+function clearCanvas() {
+	socket.emit('clearCanvas');
+}
+
+export { sendMessage, subscribeToMessages, sendSketch, subscribeToSketches, toggleShowImage, subscribeToShowImage, clearCanvas, subscribeToClearCanvas }

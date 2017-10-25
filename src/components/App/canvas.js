@@ -1,12 +1,21 @@
 import React from 'react';
-import { sendSketch, subscribeToSketches } from './api';
+import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas } from './api';
 
 
 import './canvas.css';
+import datapoints from '../../images/datapoints.jpg';
+
+const canvasWidth = 1000;
+const canvasHeight = 600;
 
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = { 
+			string: "",
+			showImage: false
+		};
 
 		this.canvas = false;
 		this.ctx = false;
@@ -22,15 +31,26 @@ class Canvas extends React.Component {
 
 		this.sketch = [];
 
+		subscribeToMessages((err, message) => {
+			this.setState({
+				string: message
+			});
+		});
+
+		subscribeToShowImage((err, showImage) => {
+			this.setState({
+				showImage: showImage
+			});
+		});
+
+		subscribeToClearCanvas((err, message) => {
+			this.ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+		});
+
 		subscribeToSketches((err, sketch) => this.drawSketch(sketch));
 	}
 
 	drawSketch(sketch) {
-		
-		console.log("sketch callback");
-		if (sketch.length > 0) {
-		}
-
 		for (let i = 0; i < sketch.length; i++) {
 			if (i === 0) {
 				this.ctx.fillRect(sketch[0].x, sketch[0].y, 2, 2);
@@ -83,7 +103,6 @@ class Canvas extends React.Component {
 		let scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
 		if (type === 'down') {
-			console.log('down');
 			this.prevX = this.currX;
 			this.currX = e.clientX - this.canvas.offsetLeft + scrollLeft;
 
@@ -105,7 +124,6 @@ class Canvas extends React.Component {
 		}
 
 		if (type === 'touchstart' && e.touches.length < 2) {
-			console.log('down');
 			this.prevX = this.currX;
 			this.currX = e.touches[0].clientX - this.canvas.offsetLeft + scrollLeft;
 
@@ -162,10 +180,20 @@ class Canvas extends React.Component {
 
 
 	render() {
-		return (
-			<canvas width="800px" height="600px" ref="canvas" id="canvas">
+		let canvasBackgroundImageClass = "canvas-background-image";
 
-			</canvas>
+		if (!this.state.showImage) {
+			canvasBackgroundImageClass += " image-hide";
+		}
+
+		return (
+			<div className="canvas-container">
+				<img className={canvasBackgroundImageClass} src={datapoints} alt=""/>
+				<div className="string-container">
+					{this.state.string}
+				</div>
+				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
+			</div>
 		);
 	}
 }

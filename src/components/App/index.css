@@ -3,7 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;	
-	width: 800px;
+	width: 1000px;
 }
 
 .App-header {
@@ -11,13 +11,16 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 100px;
-	width: 800px;
+	height: 120px;
+	width: 1000px;
 	background-color: green;
 	color: white;
 }
 
-.string-container {
-	width: 800px;
-	background-color: yellow;
+.text-controls-container {
+	display: flex;
+}
+
+.image-controls-container {
+	display: flex;
 }
