@@ -94,15 +94,19 @@ class App extends React.Component {
 					<div className="background-controls-container">
 						<div className="color-control background-color-1" onClick={() => this.setBackgroundColor("black")}></div>
 						<div className="color-control background-color-2" onClick={() => this.setBackgroundColor("white")}></div>
-						<div className="color-control background-color-3" onClick={() => this.setBackgroundColor("blue")}></div>
+						<div className="color-control background-color-3" onClick={() => this.setBackgroundColor("red")}></div>
 						<div className="color-control background-color-4" onClick={() => this.setBackgroundColor("orange")}></div>
+						<div className="color-control background-color-5" onClick={() => this.setBackgroundColor("yellow")}></div>
+						<div className="color-control background-color-6" onClick={() => this.setBackgroundColor("green")}></div>
+						<div className="color-control background-color-7" onClick={() => this.setBackgroundColor("blue")}></div>
+						<div className="color-control background-color-8" onClick={() => this.setBackgroundColor("purple")}></div>
 					</div>
 					<div className="text-controls-container">
-						<input type="text" placeholder="placeholder" value={this.state.messageValue} onChange={this.handleChange}/>
-						<button onClick={this.handleSubmit}>Submit</button>
+						<input class="text-controls-input" type="text" placeholder="enter text here" value={this.state.messageValue} onChange={this.handleChange}/>
+						<div className="text-controls-submit" onClick={this.handleSubmit}>Submit</div>
 					</div>
 					<div className="canvas-controls-container">
-						<button onClick={() => this.clearCanvas()}>Clear</button>
+						<div className="clear-button" onClick={() => this.clearCanvas()}>Clear</div>
 					</div>
 
 				</header>

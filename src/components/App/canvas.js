@@ -15,7 +15,7 @@ class Canvas extends React.Component {
 			string: "",
 			showImage: false,
 			imageUrl: "",
-			backgroundColor: "white"
+			backgroundColor: "black"
 		};
 
 		this.canvas = false;
@@ -25,14 +25,15 @@ class Canvas extends React.Component {
 		this.prevY = 0;
 		this.currY = 0;
 
-		this.color = "black";
+		this.color = "white";
 		this.flag = false;
 		this.dotFlag = false;
 		this.lineWidth = 2;
 
 		this.sketch = {
 			color: this.color,
-			points: []
+			points: [],
+			width: 0
 		};
 
 		subscribeToMessages((err, message) => {
@@ -76,13 +77,26 @@ class Canvas extends React.Component {
 				this.prevX = sketch.points[i-1].x;
 				this.prevY = sketch.points[i-1].y;
 
-				this.draw(sketch.color);
+				this.drawFromServer(sketch.color, sketch.width);
 			}
 		}
+	}
+
+	drawFromServer(color, width) {
+		this.ctx.beginPath();
+		this.ctx.moveTo(this.prevX, this.prevY);
+		this.ctx.lineTo(this.currX, this.currY);
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = width;
+        this.ctx.stroke();
+        this.ctx.closePath();
 	}
 	
 
 	componentDidMount() {
+		this.onChange();
+		this.selectColor(this.color);
+
 		this.canvas = this.refs.canvas;
 		this.ctx = this.refs.canvas.getContext("2d");
 		this.findxy("",{});
@@ -104,12 +118,12 @@ class Canvas extends React.Component {
 		this.refs.backgroundColor.style.backgroundColor = this.state.backgroundColor;
 	}
 
-	draw(color) {
+	draw(color, width) {
 		this.ctx.beginPath();
 		this.ctx.moveTo(this.prevX, this.prevY);
 		this.ctx.lineTo(this.currX, this.currY);
         this.ctx.strokeStyle = color;
-        this.ctx.lineWidth = this.lineWidth;
+        this.ctx.lineWidth = width;
         this.ctx.stroke();
         this.ctx.closePath();
 	}
@@ -137,6 +151,7 @@ class Canvas extends React.Component {
 			if (this.dotFlag) {
 				this.ctx.beginPath();
 				this.ctx.fillStyle = this.color;
+				this.ctx.lineWidth = this.refs.slider.value;
 				this.ctx.fillRect(this.currX, this.currY, this.lineWidth, this.lineWidth);
 				this.ctx.closePath();
 				this.dotFlag = false;
@@ -158,6 +173,7 @@ class Canvas extends React.Component {
 			if (this.dotFlag) {
 				this.ctx.beginPath();
 				this.ctx.fillStyle = this.color;
+				this.ctx.lineWidth = this.refs.slider.value;
 				this.ctx.fillRect(this.currX, this.currY, this.lineWidth, this.lineWidth);
 				this.ctx.closePath();
 				this.dotFlag = false;
@@ -171,7 +187,8 @@ class Canvas extends React.Component {
 			}
 			this.sketch = {
 				color: this.color,
-				points: []
+				points: [],
+				width: this.refs.slider.value
 			};
 		}
 
@@ -184,7 +201,7 @@ class Canvas extends React.Component {
 				this.currY = e.clientY - this.canvas.parentElement.offsetTop - this.canvas.offsetTop + scrollTop;
 
 				this.sketch.points.push({ x: this.currX, y: this.currY });
-				this.draw(this.color);
+				this.draw(this.color, this.refs.slider.value);
 			}
 		}
 
@@ -197,7 +214,7 @@ class Canvas extends React.Component {
 				this.currY = e.touches[0].clientY - this.canvas.parentElement.offsetTop - this.canvas.offsetTop + scrollTop;
 
 				this.sketch.points.push({ x: this.currX, y: this.currY });
-				this.draw(this.color);
+				this.draw(this.color, this.refs.slider.value);
 			}
 		}
 	}
@@ -205,6 +222,14 @@ class Canvas extends React.Component {
 	selectColor(color) {
 		this.color = color;
 		this.sketch.color = color;
+		this.refs.widthIndicator.style.backgroundColor = color;
+	}
+
+	onChange() {
+		this.refs.widthIndicator.style.width = this.refs.slider.value + "px";
+		this.refs.widthIndicator.style.height = this.refs.slider.value + "px";
+
+		this.sketch.width = this.refs.slider.value;
 	}
 
 
@@ -233,15 +258,21 @@ class Canvas extends React.Component {
 					<p className="string-text">{this.state.string}</p>
 				</div>
 				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
-				<div ref="colorControls" className="color-controls-container">
-					<div className={color1Class} onClick={() => this.selectColor("black")}></div>
-					<div className={color2Class} onClick={() => this.selectColor("white")}></div>
-					<div className={color3Class} onClick={() => this.selectColor("red")}></div>
-					<div className={color4Class} onClick={() => this.selectColor("orange")}></div>
-					<div className={color5Class} onClick={() => this.selectColor("yellow")}></div>
-					<div className={color6Class} onClick={() => this.selectColor("green")}></div>
-					<div className={color7Class} onClick={() => this.selectColor("blue")}></div>
-					<div className={color8Class} onClick={() => this.selectColor("purple")}></div>
+				<div className="sketch-controls">
+					<div ref="colorControls" className="color-controls-container">
+						<div className={color1Class} onClick={() => this.selectColor("white")}></div>
+						<div className={color2Class} onClick={() => this.selectColor("black")}></div>
+						<div className={color3Class} onClick={() => this.selectColor("red")}></div>
+						<div className={color4Class} onClick={() => this.selectColor("orange")}></div>
+						<div className={color5Class} onClick={() => this.selectColor("yellow")}></div>
+						<div className={color6Class} onClick={() => this.selectColor("green")}></div>
+						<div className={color7Class} onClick={() => this.selectColor("blue")}></div>
+						<div className={color8Class} onClick={() => this.selectColor("purple")}></div>
+					</div>
+					<div className="slider-container">
+						<input ref="slider" type="range" className="width-slider" onChange={() => this.onChange()} min={1} max={40} defaultValue={2}/>
+						<div ref="widthIndicator" className="width-indicator"></div>
+					</div>
 				</div>
 			</div>
 		);
