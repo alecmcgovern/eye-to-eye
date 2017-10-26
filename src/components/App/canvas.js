@@ -75,7 +75,8 @@ class Canvas extends React.Component {
 	drawSketch(sketch) {
 		for (let i = 0; i < sketch.points.length; i++) {
 			if (i === 0) {
-				this.ctx.fillRect(sketch.points[0].x, sketch.points[0].y, 2, 2);
+				this.ctx.fillStyle = sketch.color;
+				this.ctx.fillRect(sketch.points[0].x, sketch.points[0].y, sketch.width, sketch.width);
 			} else {
 				let curX = sketch.points[i].x;
 				let curY = sketch.points[i].y;
@@ -280,7 +281,7 @@ class Canvas extends React.Component {
 			canvasBackgroundImageClass += " image-hide";
 		}
 
-		const fiveMin = 1* 20 * 1000;
+		const fiveMin = 5 * 60 * 1000;
 		let timeUntilClear = ((fiveMin - (this.state.time % fiveMin)) / 1000).toFixed(0);
 		if (timeUntilClear < 1) {
 			// if (!this.props.showControls) {
