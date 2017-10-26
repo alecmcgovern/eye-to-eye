@@ -72,20 +72,20 @@ class Canvas extends React.Component {
 			if (i === 0) {
 				this.ctx.fillRect(sketch.points[0].x, sketch.points[0].y, 2, 2);
 			} else {
-				this.currX = sketch.points[i].x;
-				this.currY = sketch.points[i].y;
-				this.prevX = sketch.points[i-1].x;
-				this.prevY = sketch.points[i-1].y;
+				let curX = sketch.points[i].x;
+				let curY = sketch.points[i].y;
+				let preX = sketch.points[i-1].x;
+				let preY = sketch.points[i-1].y;
 
-				this.drawFromServer(sketch.color, sketch.width);
+				this.drawFromServer(sketch.color, sketch.width, curX, curY, preX, preY);
 			}
 		}
 	}
 
-	drawFromServer(color, width) {
+	drawFromServer(color, width, curX, curY, preX, preY) {
 		this.ctx.beginPath();
-		this.ctx.moveTo(this.prevX, this.prevY);
-		this.ctx.lineTo(this.currX, this.currY);
+		this.ctx.moveTo(preX, preY);
+		this.ctx.lineTo(curX, curY);
         this.ctx.strokeStyle = color;
         this.ctx.lineWidth = width;
         this.ctx.stroke();
