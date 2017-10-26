@@ -99,8 +99,10 @@ class Canvas extends React.Component {
 	
 
 	componentDidMount() {
-		this.onChange();
-		this.selectColor(this.color);
+		if (this.props.showControls) {
+			this.onChange();
+			this.selectColor(this.color);
+		}
 
 		this.canvas = this.refs.canvas;
 		this.ctx = this.refs.canvas.getContext("2d");
@@ -140,6 +142,10 @@ class Canvas extends React.Component {
 	}
 	
 	findxy(e, type) {
+		if (!this.props.showControls) {
+			return;
+		}
+
 		if (e.touches && e.touches.length < 2 && e.preventDefault) {
 			e.preventDefault();
 		}
@@ -243,6 +249,29 @@ class Canvas extends React.Component {
 		this.sketch.width = this.refs.slider.value;
 	}
 
+	renderSketchControls() {
+		if (this.props.showControls) {
+			return <div className="sketch-controls">
+					<div ref="colorControls" className="color-controls-container">
+						<div className="color-control color-1" onClick={() => this.selectColor("white")}></div>
+						<div className="color-control color-2" onClick={() => this.selectColor("black")}></div>
+						<div className="color-control color-3" onClick={() => this.selectColor("red")}></div>
+						<div className="color-control color-4" onClick={() => this.selectColor("orange")}></div>
+						<div className="color-control color-5" onClick={() => this.selectColor("yellow")}></div>
+						<div className="color-control color-6" onClick={() => this.selectColor("green")}></div>
+						<div className="color-control color-7" onClick={() => this.selectColor("blue")}></div>
+						<div className="color-control color-8" onClick={() => this.selectColor("purple")}></div>
+					</div>
+					<div className="slider-container">
+						<input ref="slider" type="range" className="width-slider" onChange={() => this.onChange()} min={1} max={40} defaultValue={2}/>
+						<div ref="widthIndicator" className="width-indicator"></div>
+					</div>
+				</div>;
+		} else {
+			return null;
+		}
+	}
+
 
 	render() {
 		let canvasBackgroundImageClass = "canvas-background-image";
@@ -251,18 +280,14 @@ class Canvas extends React.Component {
 			canvasBackgroundImageClass += " image-hide";
 		}
 
-		let color1Class = "color-control color-1";
-		let color2Class = "color-control color-2";
-		let color3Class = "color-control color-3";
-		let color4Class = "color-control color-4";
-		let color5Class = "color-control color-5";
-		let color6Class = "color-control color-6";
-		let color7Class = "color-control color-7";
-		let color8Class = "color-control color-8";
-
-		const fiveMin = 5* 60 * 1000;
+		const fiveMin = 1* 20 * 1000;
 		let timeUntilClear = ((fiveMin - (this.state.time % fiveMin)) / 1000).toFixed(0);
 		if (timeUntilClear < 1) {
+			// if (!this.props.showControls) {
+			// 	console.log("screenshot");
+			// 	let image = this.refs.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");	
+			// 	window.location.href=image;
+			// }
 			clearCanvas();
 		}
 
@@ -274,22 +299,7 @@ class Canvas extends React.Component {
 					<p className="string-text">{this.state.string}</p>
 				</div>
 				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
-				<div className="sketch-controls">
-					<div ref="colorControls" className="color-controls-container">
-						<div className={color1Class} onClick={() => this.selectColor("white")}></div>
-						<div className={color2Class} onClick={() => this.selectColor("black")}></div>
-						<div className={color3Class} onClick={() => this.selectColor("red")}></div>
-						<div className={color4Class} onClick={() => this.selectColor("orange")}></div>
-						<div className={color5Class} onClick={() => this.selectColor("yellow")}></div>
-						<div className={color6Class} onClick={() => this.selectColor("green")}></div>
-						<div className={color7Class} onClick={() => this.selectColor("blue")}></div>
-						<div className={color8Class} onClick={() => this.selectColor("purple")}></div>
-					</div>
-					<div className="slider-container">
-						<input ref="slider" type="range" className="width-slider" onChange={() => this.onChange()} min={1} max={40} defaultValue={2}/>
-						<div ref="widthIndicator" className="width-indicator"></div>
-					</div>
-				</div>
+				{this.renderSketchControls()}
 				<div ref="timer" className="timer">Clearing in {timeUntilClear} sec</div>
 			</div>
 		);

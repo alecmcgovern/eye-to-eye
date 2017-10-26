@@ -102,7 +102,7 @@ class App extends React.Component {
 						<div className="color-control background-color-8" onClick={() => this.setBackgroundColor("purple")}></div>
 					</div>
 					<div className="text-controls-container">
-						<input class="text-controls-input" type="text" placeholder="enter text here" value={this.state.messageValue} onChange={this.handleChange}/>
+						<input className="text-controls-input" type="text" placeholder="enter text here" value={this.state.messageValue} onChange={this.handleChange}/>
 						<div className="text-controls-submit" onClick={this.handleSubmit}>Submit</div>
 					</div>
 					<div className="canvas-controls-container">
@@ -110,7 +110,7 @@ class App extends React.Component {
 					</div>
 
 				</header>
-				<Canvas />
+				<Canvas showControls={this.props.showControls}/>
 			</div>
 		);
 	}
