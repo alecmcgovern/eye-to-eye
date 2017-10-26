@@ -7,7 +7,7 @@
 	overflow: hidden;
 	margin: 20px;
 
-	-webkit-border-radius: 100px;
+	-webkit-border-radius: 20px;
 	border-radius: 20px;
 	border: 2px solid white;
 }
@@ -19,9 +19,8 @@
 	height: 100%;
 	z-index: -2;
 
-	-webkit-border-radius: 100px;
+	-webkit-border-radius: 20px;
 	border-radius: 20px;
-
 	-webkit-transition: background-color 2s;
 	transition: background-color 2s;
 }
@@ -56,7 +55,7 @@
 	pointer-events: none;
 	opacity: 1;
 
-	-webkit-border-radius: 100px;
+	-webkit-border-radius: 20px;
 	border-radius: 20px;
 	-webkit-transition: opacity 2s;
 	transition: opacity 2s;

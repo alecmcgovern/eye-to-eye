@@ -70,6 +70,7 @@
 	width: 50%;
 	height: 3px;
 	background-color: white;
+	border: 1px solid grey;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -77,6 +78,7 @@ input[type=range]::-webkit-slider-thumb {
 	width: 20px;
 	height: 20px;
 	background-color: white;
+	border: 1px solid grey;
 	box-sizing: border-box;
 }
 
