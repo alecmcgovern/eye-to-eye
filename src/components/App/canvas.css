@@ -1,33 +1,61 @@
 .canvas-container {
+	position: relative;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	position: relative;
+	overflow: hidden;
+	margin: 20px;
+	border-radius: 20px;
+}
+
+.canvas-backdrop {
+	position: absolute;
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	z-index: -2;
+
+	-webkit-transition: background-color 2s;
+	transition: background-color 2s;
 }
 
 #canvas {
-	border: 1px solid black;
-	margin: 10px;
+	background-color: rgba(0,0,0,0);
 }
 
 .string-container {
 	position: absolute;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	pointer-events: none;
-	font-size: 36px;
-	background-color: yellow;
+	font-size: 48px;
+	background-color: rgba(0,0,0,0);
+}
+
+.string-text {
+	background-color: white;
+	text-align: center;
 }
 
 .canvas-background-image {
+	z-index: -1;
 	position: absolute;
-	width: 300px;
-	height: 300px;
+	top: 0;
+	width: 1000px;
+	height: 1000px;
 	pointer-events: none;
+	opacity: 1;
+
+	-webkit-transition: opacity 2s;
+	transition: opacity 2s;
 }
 
 .image-hide {
-	visibility: hidden;
+	opacity: 0;
 }
 
 

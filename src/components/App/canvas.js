@@ -1,9 +1,8 @@
 import React from 'react';
-import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas } from './api';
+import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas, subscribeToChangeImageUrl, subscribeToSetBackgroundColor } from './api';
 
 import './canvas.css';
 import './colorControls.css';
-import datapoints from '../../images/datapoints.jpg';
 
 const canvasWidth = 1000;
 const canvasHeight = 600;
@@ -14,7 +13,9 @@ class Canvas extends React.Component {
 
 		this.state = { 
 			string: "",
-			showImage: false
+			showImage: false,
+			imageUrl: "",
+			backgroundColor: "white"
 		};
 
 		this.canvas = false;
@@ -43,6 +44,18 @@ class Canvas extends React.Component {
 		subscribeToShowImage((err, showImage) => {
 			this.setState({
 				showImage: showImage
+			});
+		});
+
+		subscribeToChangeImageUrl((err, imageUrl) => {
+			this.setState({
+				imageUrl: imageUrl
+			});
+		});
+
+		subscribeToSetBackgroundColor((err, color) => {
+			this.setState({
+				backgroundColor: color
 			});
 		});
 
@@ -85,6 +98,10 @@ class Canvas extends React.Component {
 
 		this.canvas.addEventListener("mouseout", (e) => this.findxy(e, "out"));
 		this.canvas.addEventListener("touchleave", (e) => this.findxy(e, "out"));
+	}
+
+	componentDidUpdate() {
+		this.refs.backgroundColor.style.backgroundColor = this.state.backgroundColor;
 	}
 
 	draw(color) {
@@ -207,14 +224,16 @@ class Canvas extends React.Component {
 		let color7Class = "color-control color-7";
 		let color8Class = "color-control color-8";
 
+
 		return (
 			<div className="canvas-container">
-				<img className={canvasBackgroundImageClass} src={datapoints} alt=""/>
+				<div ref="backgroundColor" className="canvas-backdrop"></div>
+				<img className={canvasBackgroundImageClass} src={this.state.imageUrl} alt=""/>
 				<div className="string-container">
-					{this.state.string}
+					<p className="string-text">{this.state.string}</p>
 				</div>
 				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
-				<div className="color-controls-container">
+				<div ref="colorControls" className="color-controls-container">
 					<div className={color1Class} onClick={() => this.selectColor("black")}></div>
 					<div className={color2Class} onClick={() => this.selectColor("white")}></div>
 					<div className={color3Class} onClick={() => this.selectColor("red")}></div>

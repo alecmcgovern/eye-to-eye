@@ -45,6 +45,14 @@ io.on('connection', function(client) {
 		io.emit('clearCanvasReceived');
 	});
 
+	client.on('changeImageUrl', (imageUrl) => {
+		io.emit('changeImageUrlReceived', imageUrl);
+	});
+
+	client.on('setBackgroundColor', (color) => {
+		io.emit('setBackgroundColorReceived', color);
+	});
+
 	client.on('disconnection', function() {
 		// -1 from totalClientNumber
 	});

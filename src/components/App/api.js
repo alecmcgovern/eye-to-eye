@@ -35,4 +35,25 @@ function clearCanvas() {
 	socket.emit('clearCanvas');
 }
 
-export { sendMessage, subscribeToMessages, sendSketch, subscribeToSketches, toggleShowImage, subscribeToShowImage, clearCanvas, subscribeToClearCanvas }
+function subscribeToChangeImageUrl(callback) {
+	socket.on('changeImageUrlReceived', (imageUrl) => callback(null, imageUrl));
+}
+
+function changeImageUrl(imageUrl) {
+	socket.emit('changeImageUrl', imageUrl);
+}
+
+function subscribeToSetBackgroundColor(callback) {
+	socket.on('setBackgroundColorReceived', (color) => callback(null, color));
+}
+
+function setBackgroundColor(color) {
+	socket.emit('setBackgroundColor', color);
+}
+
+export { sendMessage, subscribeToMessages, sendSketch, subscribeToSketches, toggleShowImage, subscribeToShowImage, clearCanvas, subscribeToClearCanvas, 
+	subscribeToChangeImageUrl, changeImageUrl, setBackgroundColor, subscribeToSetBackgroundColor }
+
+
+
+
