@@ -1,5 +1,5 @@
 import React from 'react';
-import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas, subscribeToChangeImageUrl, subscribeToSetBackgroundColor } from './api';
+import { subscribeToMessages, sendSketch, subscribeToSketches, subscribeToShowImage, subscribeToClearCanvas, subscribeToChangeImageUrl, subscribeToSetBackgroundColor, clearCanvas } from './api';
 
 import './canvas.css';
 import './colorControls.css';
@@ -12,6 +12,7 @@ class Canvas extends React.Component {
 		super(props);
 
 		this.state = { 
+			time: new Date(),
 			string: "",
 			showImage: false,
 			imageUrl: "",
@@ -35,6 +36,10 @@ class Canvas extends React.Component {
 			points: [],
 			width: 0
 		};
+
+		setInterval(() => {
+			this.setState({time: new Date()})
+		}, 100);
 
 		subscribeToMessages((err, message) => {
 			this.setState({
@@ -116,6 +121,12 @@ class Canvas extends React.Component {
 
 	componentDidUpdate() {
 		this.refs.backgroundColor.style.backgroundColor = this.state.backgroundColor;
+
+		if (this.state.backgroundColor === "white" || this.state.backgroundColor === "yellow") {
+			this.refs.timer.style.color = "black";
+		} else {
+			this.refs.timer.style.color = "white";
+		}
 	}
 
 	draw(color, width) {
@@ -249,6 +260,11 @@ class Canvas extends React.Component {
 		let color7Class = "color-control color-7";
 		let color8Class = "color-control color-8";
 
+		const fiveMin = 5* 60 * 1000;
+		let timeUntilClear = ((fiveMin - (this.state.time % fiveMin)) / 1000).toFixed(0);
+		if (timeUntilClear < 1) {
+			clearCanvas();
+		}
 
 		return (
 			<div className="canvas-container">
@@ -274,6 +290,7 @@ class Canvas extends React.Component {
 						<div ref="widthIndicator" className="width-indicator"></div>
 					</div>
 				</div>
+				<div ref="timer" className="timer">Clearing in {timeUntilClear} sec</div>
 			</div>
 		);
 	}
