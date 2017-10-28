@@ -8,6 +8,9 @@ import datapoints from '../../images/datapoints.jpg';
 import memorand from '../../images/memorand.png';
 import monitor from '../../images/monitor.jpg';
 import wytches from '../../images/wytches.png';
+import stars from '../../images/stars.jpg';
+import moon from '../../images/moon.jpg';
+import house from '../../images/house.png';
 
 
 class App extends React.Component {
@@ -21,7 +24,7 @@ class App extends React.Component {
 			imageUrl: datapoints
 		};
 
-		this.images = [datapoints, memorand, monitor, wytches];
+		this.images = [datapoints, memorand, monitor, wytches, stars, moon, house];
 
 		this.handleChange = this.handleChange.bind(this);
     	this.handleSubmit = this.handleSubmit.bind(this);
@@ -92,14 +95,14 @@ class App extends React.Component {
 						<div className={toggleImageButtonClass} onClick={() => this.toggleShowImage()}>Show/Hide</div>
 					</div>
 					<div className="background-controls-container">
-						<div className="color-control background-color-1" onClick={() => this.setBackgroundColor("black")}></div>
-						<div className="color-control background-color-2" onClick={() => this.setBackgroundColor("white")}></div>
-						<div className="color-control background-color-3" onClick={() => this.setBackgroundColor("red")}></div>
-						<div className="color-control background-color-4" onClick={() => this.setBackgroundColor("orange")}></div>
-						<div className="color-control background-color-5" onClick={() => this.setBackgroundColor("yellow")}></div>
-						<div className="color-control background-color-6" onClick={() => this.setBackgroundColor("green")}></div>
-						<div className="color-control background-color-7" onClick={() => this.setBackgroundColor("blue")}></div>
-						<div className="color-control background-color-8" onClick={() => this.setBackgroundColor("purple")}></div>
+						<div className="background-color-control background-color-1" onClick={() => this.setBackgroundColor("black")}></div>
+						<div className="background-color-control background-color-2" onClick={() => this.setBackgroundColor("white")}></div>
+						<div className="background-color-control background-color-3" onClick={() => this.setBackgroundColor("red")}></div>
+						<div className="background-color-control background-color-4" onClick={() => this.setBackgroundColor("orange")}></div>
+						<div className="background-color-control background-color-5" onClick={() => this.setBackgroundColor("yellow")}></div>
+						<div className="background-color-control background-color-6" onClick={() => this.setBackgroundColor("green")}></div>
+						<div className="background-color-control background-color-7" onClick={() => this.setBackgroundColor("blue")}></div>
+						<div className="background-color-control background-color-8" onClick={() => this.setBackgroundColor("purple")}></div>
 					</div>
 					<div className="text-controls-container">
 						<input className="text-controls-input" type="text" placeholder="enter text here" value={this.state.messageValue} onChange={this.handleChange}/>

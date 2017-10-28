@@ -277,8 +277,8 @@ class Canvas extends React.Component {
 	render() {
 		let canvasBackgroundImageClass = "canvas-background-image";
 
-		if (!this.state.showImage) {
-			canvasBackgroundImageClass += " image-hide";
+		if (this.state.showImage) {
+			canvasBackgroundImageClass += " image-show";
 		}
 
 		const fiveMin = 5 * 60 * 1000;
