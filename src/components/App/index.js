@@ -10,7 +10,6 @@ import monitor from '../../images/monitor.jpg';
 import wytches from '../../images/wytches.png';
 import stars from '../../images/stars.jpg';
 import moon from '../../images/moon.jpg';
-import house from '../../images/house.png';
 
 
 class App extends React.Component {
@@ -24,7 +23,7 @@ class App extends React.Component {
 			imageUrl: datapoints
 		};
 
-		this.images = [datapoints, memorand, monitor, wytches, stars, moon, house];
+		this.images = [datapoints, memorand, monitor, wytches, stars, moon];
 
 		this.handleChange = this.handleChange.bind(this);
     	this.handleSubmit = this.handleSubmit.bind(this);

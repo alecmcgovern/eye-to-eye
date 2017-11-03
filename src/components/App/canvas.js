@@ -299,7 +299,7 @@ class Canvas extends React.Component {
 				<div className="string-container">
 					<p className="string-text">{this.state.string}</p>
 				</div>
-				<canvas width={canvasWidth + "px"} height={canvasHeight + "px"} ref="canvas" id="canvas"></canvas>
+				<canvas id="canvas" ref="canvas" width={canvasWidth + "px"} height={canvasHeight + "px"}></canvas>
 				{this.renderSketchControls()}
 				<div ref="timer" className="timer">Clearing in {timeUntilClear} sec</div>
 			</div>

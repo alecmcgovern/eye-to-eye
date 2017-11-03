@@ -7,9 +7,14 @@
 	overflow: hidden;
 	margin: 50px;
 
-	-webkit-border-radius: 20px;
-	border-radius: 20px;
+
+/*	-webkit-border-radius: 20px;
+	border-radius: 20px;*/
 	border: 2px solid white;
+	box-sizing: border-box;
+
+	-webkit-transform:translateZ(0);
+	/*-webkit-mask-image: -webkit-radial-gradient(white, black);*/
 }
 
 .canvas-backdrop {
@@ -18,6 +23,9 @@
 	width: 100%;
 	height: 100%;
 	z-index: -2;
+/*	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	box-sizing: border-box;*/
 
 	-webkit-transition: background-color 2s;
 	transition: background-color 2s;
@@ -25,6 +33,9 @@
 
 #canvas {
 	background-color: rgba(0,0,0,0);
+
+/*	-webkit-border-radius: 20px;
+	border-radius: 20px;*/
 }
 
 .string-container {
@@ -57,13 +68,17 @@
 	border-radius: 20px;
 	-webkit-transition: opacity 2s;
 	transition: opacity 2s;
+	animation: 60s linear kenburns;
+	animation-play-state: paused;
+	animation-fill-mode: forwards;
 
 }
 
 .image-show {
-	opacity: 1;
 	animation: 60s linear kenburns;
+	opacity: 1;
 	animation-iteration-count:infinite;
+	animation-play-state: running;
 }
 
 @keyframes kenburns {
