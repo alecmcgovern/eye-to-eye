@@ -29,7 +29,7 @@ class Canvas extends React.Component {
 		this.color = "white";
 		this.flag = false;
 		this.dotFlag = false;
-		this.lineWidth = 2;
+		this.lineWidth = 8;
 
 		this.sketch = {
 			color: this.color,
@@ -264,7 +264,7 @@ class Canvas extends React.Component {
 						<div className="color-control color-8" onClick={() => this.selectColor("purple")}></div>
 					</div>
 					<div className="slider-container">
-						<input ref="slider" type="range" className="width-slider" onChange={() => this.onChange()} min={1} max={40} defaultValue={2}/>
+						<input ref="slider" type="range" className="width-slider" onChange={() => this.onChange()} min={1} max={40} defaultValue={8}/>
 						<div ref="widthIndicator" className="width-indicator"></div>
 					</div>
 				</div>;
